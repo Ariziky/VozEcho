@@ -120,7 +120,7 @@ class EnregistrementController extends Controller
         // Headers de la réponse
         $headers = [
             'Content-Type' => $mimeType,
-            'Content-Disposition' => 'attachment; filename="audio.mp3"',
+            'Content-Disposition' => 'attachment; filename="audio.' . $mimeType . '"',
         ];
 
         // Retourne le fichier comme réponse
