@@ -12,7 +12,7 @@ class EnregistrementResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'path' => $this->path,
+            'uuid' => $this->uuid,
         ];
     }
 }
