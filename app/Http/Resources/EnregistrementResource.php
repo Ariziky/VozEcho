@@ -13,6 +13,7 @@ class EnregistrementResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'uuid' => $this->uuid,
             'path' => Str::afterLast(basename($this->path), '/'),
         ];
     }

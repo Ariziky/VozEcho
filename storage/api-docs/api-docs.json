@@ -1,0 +1,93 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Your super  ApplicationAPI",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/audio": {
+            "post": {
+                "tags": [
+                    "Enregistrement"
+                ],
+                "summary": "Génère un enregistrement audio",
+                "description": "Retourne le nom du fichier généré",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Record data and attachment file",
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "File uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "path": {
+                                            "description": "File path",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid file format or missing file"
+                    }
+                }
+            }
+        },
+        "/api/audio/{audio}": {
+            "get": {
+                "tags": [
+                    "Enregistrement"
+                ],
+                "summary": "Get audio file",
+                "description": "Get the audio file associated with the specified record.",
+                "operationId": "e3b1193aa1020bd054ed19f5a6d00180",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "ID of the record",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "audio/mpeg": {
+                                "schema": {
+                                    "type": "file"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fichier inexistant"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
