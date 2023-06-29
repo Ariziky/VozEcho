@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\File;
 
 class EnregistrementRequest extends FormRequest
 {
@@ -12,8 +11,7 @@ class EnregistrementRequest extends FormRequest
         return [
             'attachment' => [
                 'required',
-                File::types(['webm', 'mp3', 'wav'])
-                    ->max(2 * 1024),
+                'mimetypes:audio/webm'
             ],
         ];
     }
@@ -23,9 +21,7 @@ class EnregistrementRequest extends FormRequest
         return [
             'attachment' => [
                 'required' => 'Veuillez attacher un fichier',
-                'max' => 'Fichier trop lourd',
-                'mimetypes' => 'Le format du fichier est invalide',
-                'mimes' => 'Le format du fichier est invalide',
+                'mimetypes' => 'Le format de fichier est invalide (format accepté : audio/webm)',
             ],
         ];
     }
