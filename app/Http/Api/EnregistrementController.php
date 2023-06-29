@@ -21,25 +21,41 @@ class EnregistrementController extends Controller
      *      tags={"Enregistrement"},
      *      summary="Génère un enregistrement audio",
      *      description="Retourne le nom du fichier généré",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Record data and attachment file",
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="File uploaded successfully",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 property="path",
-     *                 description="File path",
-     *                 type="string"
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Record data and attachment file",
+     *          @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"attachment"},
+     *                 @OA\Property(
+     *                     property="attachment",
+     *                     description="Sélectionnez un fichier audio",
+     *                     type="file"
+     *                 )
      *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid file format or missing file"
-     *     )
+     *         ),
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Enregistrment généré avec succès",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="uuid",
+     *                  description="Uuid",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="path",
+     *                  description="File path",
+     *                  type="string"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Le format de fichier est invalide (format accepté : audio/webm)"
+     *      )
      * )
      */
     public function store(EnregistrementRequest $request): JsonResource|EnregistrementResource
@@ -69,40 +85,27 @@ class EnregistrementController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/audio/{audio}",
+     *     path="/api/v1/audio/{uuid}",
      *     tags={"Enregistrement"},
-     *     summary="Get audio file",
-     *     description="Get the audio file associated with the specified record.",
+     *     summary="Retourne un enregistrement audio",
+     *     description="Retourne un enregistrement audio pour l'uuid renseigné",
      *     @OA\Parameter(
      *         name="uuid",
      *         in="path",
-     *         description="ID of the record",
+     *         description="uuid de l'enregistrement",
      *         required=true,
      *         @OA\Schema(
      *             type="string",
      *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\MediaType(
-     *             mediaType="audio/mpeg",
-     *             @OA\Schema(
-     *                 type="file"
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Not Found",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 property="message",
-     *                 type="string",
-     *                 example="Fichier inexistant"
-     *             )
-     *         )
-     *     )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Fichier retourné avec succès"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Fichier inexistant"
+     *      )
      * )
      */
     public function show(Enregistrement $audio)
@@ -117,10 +120,13 @@ class EnregistrementController extends Controller
         // Récupère le MIME type du fichier
         $mimeType = File::mimeType($filePath);
 
+        // Récupère l'extension du fichier
+        $extension = File::extension($filePath);
+
         // Headers de la réponse
         $headers = [
             'Content-Type' => $mimeType,
-            'Content-Disposition' => 'attachment; filename="audio.' . $mimeType . '"',
+            'Content-Disposition' => 'attachment; filename="audio.' . $extension . '"',
         ];
 
         // Retourne le fichier comme réponse

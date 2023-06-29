@@ -9,7 +9,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
- *    title="Your super  ApplicationAPI",
+ *    title="VozEcho API Docs",
  *    version="1.0.0",
  * )
  */

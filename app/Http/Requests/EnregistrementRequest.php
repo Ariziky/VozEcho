@@ -11,7 +11,7 @@ class EnregistrementRequest extends FormRequest
         return [
             'attachment' => [
                 'required',
-                'mimetypes:audio/webm'
+                'mimetypes:audio/webm,audio/mpeg'
             ],
         ];
     }
