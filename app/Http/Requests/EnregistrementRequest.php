@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class EnregistrementRequest extends FormRequest
 {
@@ -11,7 +12,8 @@ class EnregistrementRequest extends FormRequest
         return [
             'attachment' => [
                 'required',
-                'mimetypes:audio/webm,audio/mpeg'
+//                'mimetypes:audio/mpeg'
+                File::types(['webm', 'mp3'])
             ],
         ];
     }
