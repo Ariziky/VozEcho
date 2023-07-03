@@ -73,10 +73,11 @@ class EnregistrementController extends Controller
             $filename = Str::uuid() . '.' . $attachment->getClientOriginalExtension();
 
             // Stocke le fichier dans le disque vozecho-audios
-            $storedFile = $attachment->storeAs('/', $filename, '');
+            $storedFile = $attachment->storeAs('/', $filename, config('app.vozecho_audios_directory_name'));
 
             // Persistence des données
             $record = new Enregistrement();
+//            $record->path = 'storage/vozecho-audios/' . $storedFile;
             $record->path = 'storage/' . config('app.vozecho_audios_directory_name') . '/' . $storedFile;
             $record->size = $attachment->getSize();
             $record->save();
