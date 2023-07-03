@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EnregistrementRequest;
 use App\Http\Resources\EnregistrementResource;
 use App\Models\Enregistrement;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use OpenApi\Annotations as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class EnregistrementController extends Controller
 {
@@ -60,7 +62,7 @@ class EnregistrementController extends Controller
      */
     public function store(EnregistrementRequest $request): JsonResource|EnregistrementResource
     {
-        if (! File::isFile($request->validated()['attachment'])) {
+        if (!File::isFile($request->validated()['attachment'])) {
             return JsonResource::make([]);
         }
 
@@ -68,14 +70,14 @@ class EnregistrementController extends Controller
             $attachment = $request->file('attachment');
 
             // Génère un nom unique pour le fichier audio
-            $filename = Str::uuid().'.'.$attachment->getClientOriginalExtension();
+            $filename = Str::uuid() . '.' . $attachment->getClientOriginalExtension();
 
             // Stocke le fichier dans le disque vozecho-audios
-            $storedFile = $attachment->storeAs('/', $filename, 'vozecho-audios');
+            $storedFile = $attachment->storeAs('/', $filename, '');
 
             // Persistence des données
             $record = new Enregistrement();
-            $record->path = 'storage/'.config('app.vozecho_audios_directory_name').'/'.$storedFile;
+            $record->path = 'storage/' . config('app.vozecho_audios_directory_name') . '/' . $storedFile;
             $record->size = $attachment->getSize();
             $record->save();
 
@@ -108,28 +110,36 @@ class EnregistrementController extends Controller
      *      )
      * )
      */
-    public function show(Enregistrement $audio)
+//    public function show(Enregistrement $audio)
+//    {
+//        $filePath = public_path($audio->path);
+//
+//        // Vérifie si le fichier existe
+//        if (! File::exists($filePath)) {
+//            return response()->json(['message' => 'Fichier inexistant'], 404);
+//        }
+//
+//        // Récupère le MIME type du fichier
+//        $mimeType = File::mimeType($filePath);
+//
+//        // Récupère l'extension du fichier
+//        $extension = File::extension($filePath);
+//
+//        // Headers de la réponse
+//        $headers = [
+//            'Content-Type' => $mimeType,
+//            'Content-Disposition' => 'attachment; filename="audio.'.$extension.'"',
+//        ];
+//
+//        // Retourne le fichier comme réponse
+//        return response()->file($filePath, $headers);
+//    }
+
+    public function show(Enregistrement $audio): JsonResponse|string
     {
-        $filePath = public_path($audio->path);
-
-        // Vérifie si le fichier existe
-        if (! File::exists($filePath)) {
-            return response()->json(['message' => 'Fichier inexistant'], 404);
-        }
-
-        // Récupère le MIME type du fichier
-        $mimeType = File::mimeType($filePath);
-
-        // Récupère l'extension du fichier
-        $extension = File::extension($filePath);
-
-        // Headers de la réponse
-        $headers = [
-            'Content-Type' => $mimeType,
-            'Content-Disposition' => 'attachment; filename="audio.'.$extension.'"',
-        ];
-
-        // Retourne le fichier comme réponse
-        return response()->file($filePath, $headers);
+        return response()->json(
+            data: ['url' => config('app.url') . '/' . $audio->path],
+            status: Response::HTTP_OK
+        );
     }
 }

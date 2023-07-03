@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Enregistrement extends Model
 {
@@ -22,5 +23,10 @@ class Enregistrement extends Model
     public function getRouteKeyName(): string
     {
         return 'uuid';
+    }
+
+    public function listenings(): HasMany
+    {
+        return $this->hasMany(Listening::class, 'enregistrement_id');
     }
 }

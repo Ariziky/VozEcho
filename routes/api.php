@@ -22,14 +22,19 @@ Route::middleware(['auth:sanctum', 'throttle:api'])
         return $request->user();
     });
 
-Route::controller(EnregistrementController::class)
-    ->middleware(['auth:sanctum', 'throttle:api'])
-    ->prefix('audio')
-    ->as('audio.')
-    ->group(function () {
-        // Route pour générer le fichier audio
-        Route::post('/', 'store')->name('store');
+//Route::controller(EnregistrementController::class)
+//    ->middleware(['auth:sanctum', 'throttle:api'])
+//    ->prefix('audio')
+//    ->as('audio.')
+//    ->group(function () {
+//        // Route pour générer le fichier audio
+//        Route::post('/', 'store')->name('store');
+//
+//        // Route pour récupérer le fichier audio
+//        Route::get('/{audio:uuid}', 'show')->name('show');
+//    });
 
-        // Route pour récupérer le fichier audio
-        Route::get('/{audio:uuid}', 'show')->name('show');
+Route::middleware(['auth:sanctum', 'throttle:api'])
+    ->group(function () {
+        Route::apiResource('audio', EnregistrementController::class)->only(['store', 'show']);
     });
