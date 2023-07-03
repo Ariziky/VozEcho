@@ -60,7 +60,7 @@ class EnregistrementController extends Controller
      */
     public function store(EnregistrementRequest $request): JsonResource|EnregistrementResource
     {
-        if (!File::isFile($request->validated()['attachment'])) {
+        if (! File::isFile($request->validated()['attachment'])) {
             return JsonResource::make([]);
         }
 
@@ -68,14 +68,14 @@ class EnregistrementController extends Controller
             $attachment = $request->file('attachment');
 
             // Génère un nom unique pour le fichier audio
-            $filename = Str::uuid() . '.' . $attachment->getClientOriginalExtension();
+            $filename = Str::uuid().'.'.$attachment->getClientOriginalExtension();
 
             // Stocke le fichier dans le disque vozecho-audios
             $storedFile = $attachment->storeAs('/', $filename, 'vozecho-audios');
 
             // Persistence des données
             $record = new Enregistrement();
-            $record->path = 'storage/' . config('app.vozecho_audios_directory_name') . '/' . $storedFile;
+            $record->path = 'storage/'.config('app.vozecho_audios_directory_name').'/'.$storedFile;
             $record->size = $attachment->getSize();
             $record->save();
 
@@ -113,7 +113,7 @@ class EnregistrementController extends Controller
         $filePath = public_path($audio->path);
 
         // Vérifie si le fichier existe
-        if (!File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             return response()->json(['message' => 'Fichier inexistant'], 404);
         }
 
@@ -126,7 +126,7 @@ class EnregistrementController extends Controller
         // Headers de la réponse
         $headers = [
             'Content-Type' => $mimeType,
-            'Content-Disposition' => 'attachment; filename="audio.' . $extension . '"',
+            'Content-Disposition' => 'attachment; filename="audio.'.$extension.'"',
         ];
 
         // Retourne le fichier comme réponse

@@ -12,8 +12,8 @@ class EnregistrementRequest extends FormRequest
         return [
             'attachment' => [
                 'required',
-//                'mimetypes:audio/mpeg'
-                File::types(['webm', 'mp3'])
+                'file',
+                File::types(['webm', 'mp3']),
             ],
         ];
     }
@@ -23,7 +23,9 @@ class EnregistrementRequest extends FormRequest
         return [
             'attachment' => [
                 'required' => 'Veuillez attacher un fichier',
-                'mimetypes' => 'Le format de fichier est invalide (format accepté : audio/webm)',
+                'file' => 'Veuillez charger un fichier',
+                'mimetypes' => 'Le format de fichier est invalide (format accepté : .webm)',
+                'mimes' => '',
             ],
         ];
     }
