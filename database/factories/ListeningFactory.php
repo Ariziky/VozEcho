@@ -18,8 +18,8 @@ class ListeningFactory extends Factory
             'uuid' => $this->faker->uuid(),
             'enregistrement_id' => $this->faker->numberBetween(1, $recordsMaxId),
             'ip_address' => $this->faker->ipv4(),
-            'created_at' => $this->faker->dateTimeBetween(now()->subDays(2), now()),
-            'updated_at' => $this->faker->dateTimeBetween(now()->subDays(2), now()),
+            'created_at' => $this->faker->dateTimeBetween(now()->subDays(), now()),
+            'updated_at' => $this->faker->dateTimeBetween(now()->subDays(), now()),
         ];
     }
 }

@@ -9,15 +9,16 @@ use Flowframe\Trend\TrendValue;
 use Illuminate\Support\Carbon;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
-class LastThreeMonthsChart extends ApexChartWidget
+class LastThreeMonthsLineChart extends ApexChartWidget
 {
-    protected static string $chartId = 'lastThreeMonthsChart';
+    protected static string $chartId = 'lastThreeMonthsLineChart';
 
     protected static ?string $heading = 'Activité durant les 3 derniers mois';
 
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 3;
 
     protected int|string|array $columnSpan = 1;
+
 
     protected function getOptions(): array
     {
@@ -41,9 +42,11 @@ class LastThreeMonthsChart extends ApexChartWidget
             ->perMonth()
             ->count();
 
+        $visitsData = [55, 205, 195];
+
         return [
             'chart' => [
-                'type' => 'bar',
+                'type' => 'line',
                 'height' => 300,
             ],
             'series' => [
@@ -54,6 +57,10 @@ class LastThreeMonthsChart extends ApexChartWidget
                 [
                     'name' => 'Total lectures',
                     'data' => $listeningsData->map(fn(TrendValue $value) => $value->aggregate),
+                ],
+                [
+                    'name' => 'Total visites',
+                    'data' => $visitsData,
                 ],
 
             ],
@@ -74,11 +81,9 @@ class LastThreeMonthsChart extends ApexChartWidget
                     ],
                 ],
             ],
-            'colors' => ['#132775', '#ED8223'],
+            'colors' => ['#132775', '#ED8223', '#2F2525'],
             'stroke' => [
-                'show' => true,
-                'width' => 2,
-                'colors' => ['transparent'],
+                'curve' => 'smooth',
             ],
             'grid' => [
                 'borderColor' => '#e7e7e7',
@@ -95,24 +100,6 @@ class LastThreeMonthsChart extends ApexChartWidget
                 'blur' => 10,
                 'opacity' => 0.2,
             ],
-            'plotOptions' => [
-                'bar' => [
-                    'borderRadius' => 3,
-                ],
-            ],
         ];
     }
-
-//    protected function getFormSchema(): array
-//    {
-//        return [
-//            DatePicker::make('date_start')
-//                ->default(now()->subMonths(2))
-//                ->closeOnDateSelection(),
-//
-//            DatePicker::make('date_end')
-//                ->default(now())
-//                ->closeOnDateSelection(),
-//        ];
-//    }
 }

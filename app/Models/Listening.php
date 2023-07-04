@@ -5,8 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property mixed|null $enregistrement
+ */
 class Listening extends Model
 {
     use HasUuids;
@@ -21,5 +25,15 @@ class Listening extends Model
     public function uniqueIds(): array
     {
         return ['uuid'];
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
+
+    public function enregistrement(): BelongsTo
+    {
+        return $this->belongsTo(Enregistrement::class);
     }
 }
