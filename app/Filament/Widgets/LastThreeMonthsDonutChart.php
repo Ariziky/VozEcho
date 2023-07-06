@@ -26,7 +26,7 @@ class LastThreeMonthsDonutChart extends ApexChartWidget
             ->whereMonth('created_at', '>', today()->subMonths(2))
             ->count();
 
-        $visitsData = 200;
+        $visitsData = 260;
 
         return [
             'chart' => [
