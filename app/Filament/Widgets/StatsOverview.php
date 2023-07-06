@@ -15,6 +15,8 @@ class StatsOverview extends BaseWidget
     protected function getCards(): array
     {
         return [
+//            Fieldset::make('test')
+//                ->schema([
             Card::make('Nbre total d\'enregistrements', $this->getTodayRecords())
 //                ->description('32k increase')
 //                ->descriptionIcon('heroicon-s-trending-up')
@@ -24,6 +26,7 @@ class StatsOverview extends BaseWidget
 //                ->description('32k increase')
 //                ->descriptionIcon('heroicon-s-trending-up')
                 ->color('success'),
+//                ]),
 
             Card::make('Nbre total d\'enregistrements', $this->getCurrentMonthRecords())
 //                ->description('32k increase')
