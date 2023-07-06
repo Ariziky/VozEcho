@@ -49,16 +49,16 @@ class LastThreeMonthsChart extends ApexChartWidget
             'series' => [
                 [
                     'name' => 'Total enregistrements',
-                    'data' => $recordsData->map(fn(TrendValue $value) => $value->aggregate),
+                    'data' => $recordsData->map(fn (TrendValue $value) => $value->aggregate),
                 ],
                 [
                     'name' => 'Total lectures',
-                    'data' => $listeningsData->map(fn(TrendValue $value) => $value->aggregate),
+                    'data' => $listeningsData->map(fn (TrendValue $value) => $value->aggregate),
                 ],
 
             ],
             'xaxis' => [
-                'categories' => $recordsData->map(fn(TrendValue $value) => Carbon::parse($value->date)->monthName),
+                'categories' => $recordsData->map(fn (TrendValue $value) => Carbon::parse($value->date)->monthName),
                 'labels' => [
                     'style' => [
                         'colors' => '#9ca3af',

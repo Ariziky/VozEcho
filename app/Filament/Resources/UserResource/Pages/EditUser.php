@@ -6,12 +6,16 @@ use App\Filament\Resources\UserResource;
 use Exception;
 use Filament\Pages\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EditUser extends EditRecord
 {
     protected static string $resource = UserResource::class;
 
-    protected static ?string $title = 'Consultation utilisateur';
+    protected function getTitle(): string|Htmlable
+    {
+        return 'Editer utilisateur : '.$this->record->name;
+    }
 
     /**
      * @throws Exception
@@ -19,7 +23,8 @@ class EditUser extends EditRecord
     protected function getActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->size('sm'),
         ];
     }
 }

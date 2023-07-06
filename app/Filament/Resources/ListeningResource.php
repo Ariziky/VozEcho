@@ -28,20 +28,20 @@ class ListeningResource extends Resource
                 Card::make([
                     Placeholder::make('created_at')
                         ->label('Date de lecture')
-                        ->content(fn(Listening $record): string => $record->created_at->format('d/m/Y H:i')),
+                        ->content(fn (Listening $record): string => $record->created_at->format('d/m/Y H:i')),
 
                     Placeholder::make('ip_address')
                         ->label('Ip de l\'utilisateur')
-                        ->content(fn(Listening $record): string => $record->ip_address),
+                        ->content(fn (Listening $record): string => $record->ip_address),
 
                     Placeholder::make('file_name')
                         ->label('Nom du fichier')
-                        ->content(fn(Listening $record): string => basename($record->enregistrement->path)),
+                        ->content(fn (Listening $record): string => basename($record->enregistrement->path)),
 
                     Placeholder::make('file_url')
                         ->label('Url du fichier')
-                        ->content(fn(Listening $record): string => asset($record->enregistrement->path)),
-                ])
+                        ->content(fn (Listening $record): string => asset($record->enregistrement->path)),
+                ]),
             ]);
     }
 
@@ -61,10 +61,10 @@ class ListeningResource extends Resource
 
                 TextColumn::make('enregistrement.path')
                     ->label('Nom du fichier')
-                    ->formatStateUsing(fn($state) => basename($state)),
+                    ->formatStateUsing(fn ($state) => basename($state)),
             ])
             ->actions([
-                ViewAction::make()->iconButton()
+                ViewAction::make()->iconButton(),
             ]);
     }
 

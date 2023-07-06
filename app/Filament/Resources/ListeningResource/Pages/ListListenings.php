@@ -8,4 +8,6 @@ use Filament\Resources\Pages\ListRecords;
 class ListListenings extends ListRecords
 {
     protected static string $resource = ListeningResource::class;
+
+    protected static ?string $title = 'Historique de lecture';
 }

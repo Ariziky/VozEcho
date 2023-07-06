@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -29,20 +30,29 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label('Nom et prénom(s)')
-                    ->required()
-                    ->maxLength(50),
+                Card::make([
+                    TextInput::make('name')
+                        ->label('Nom et prénom(s)')
+                        ->required()
+                        ->maxLength(50),
 
-                TextInput::make('email')
-                    ->label('Adresse mail')
-                    ->required()
-                    ->email(),
+                    TextInput::make('email')
+                        ->label('Adresse mail')
+                        ->required()
+                        ->email(),
+                ])->columnSpan(3),
 
-                Placeholder::make('created_at')
-                    ->label('Date Création')
-                    ->content(fn (?User $record): string => $record?->created_at?->diffForHumans() ?? '-'),
-            ]);
+                Card::make([
+                    Placeholder::make('created_at')
+                        ->label('Date Création')
+                        ->content(fn (?User $record): string => $record?->created_at?->format('d/m/Y H:i:s')),
+
+                    Placeholder::make('created_at')
+                        ->label('Date Création')
+                        ->disableLabel()
+                        ->content(fn (?User $record): string => $record?->created_at?->diffForHumans() ?? '-'),
+                ])->columnSpan(1),
+            ])->columns(4);
     }
 
     public static function table(Table $table): Table
@@ -60,7 +70,7 @@ class UserResource extends Resource
                     ->sortable(),
 
                 TextColumn::make('created_at')
-                    ->label('Créé le')
+                    ->label('Date création')
                     ->date(),
             ]);
     }
