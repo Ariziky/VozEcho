@@ -12,3 +12,5 @@
 */
 
 Route::redirect('/', '/admin/login');
+
+Route::view('welcome', 'welcome');
