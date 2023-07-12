@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ListeningRequest;
@@ -23,7 +23,7 @@ class ListeningController extends Controller
             'enregistrement_id' => $record->id,
             'ip_address' => $request->get('ip_address')
         ];
-        
+
         Listening::create($data);
 
         return response()->json('Lecture enregistrée avec succès', Response::HTTP_CREATED);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EnregistrementRequest;
@@ -62,7 +62,7 @@ class EnregistrementController extends Controller
      */
     public function store(EnregistrementRequest $request): JsonResource|EnregistrementResource
     {
-        if (! File::isFile($request->validated()['attachment'])) {
+        if (!File::isFile($request->validated()['attachment'])) {
             return JsonResource::make([]);
         }
 
@@ -70,7 +70,7 @@ class EnregistrementController extends Controller
             $attachment = $request->file('attachment');
 
             // Génère un nom unique pour le fichier audio
-            $filename = Str::uuid().'.'.$attachment->getClientOriginalExtension();
+            $filename = Str::uuid() . '.' . $attachment->getClientOriginalExtension();
 
             // Stocke le fichier dans le disque vozecho-audios
             $storedFile = $attachment->storeAs('/', $filename, config('app.vozecho_audios_directory_name'));
@@ -78,7 +78,7 @@ class EnregistrementController extends Controller
             // Persistence des données
             $record = new Enregistrement();
 //            $record->path = 'storage/vozecho-audios/' . $storedFile;
-            $record->path = 'storage/'.config('app.vozecho_audios_directory_name').'/'.$storedFile;
+            $record->path = 'storage/' . config('app.vozecho_audios_directory_name') . '/' . $storedFile;
             $record->size = $attachment->getSize();
             $record->save();
 
@@ -139,7 +139,7 @@ class EnregistrementController extends Controller
     public function show(Enregistrement $audio): JsonResponse|string
     {
         return response()->json(
-            data: ['url' => config('app.url').'/'.$audio->path],
+            data: ['url' => config('app.url') . '/' . $audio->path],
             status: Response::HTTP_OK
         );
     }

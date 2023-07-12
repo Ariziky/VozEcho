@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Api\AuthController;
-use App\Http\Api\EnregistrementController;
-use App\Http\Api\ListeningController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EnregistrementController;
+use App\Http\Controllers\Api\ListeningController;
+use App\Http\Controllers\Api\VisitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,5 +41,9 @@ Route::middleware(['auth:sanctum', 'throttle:api'])
         Route::apiResource('audio', EnregistrementController::class)
             ->only(['store', 'show']);
 
+        // Enregistrement d'une lecture
         Route::post('listen', ListeningController::class);
+
+        // Enregistrement d'une visite
+        Route::post('visit', VisitController::class);
     });
