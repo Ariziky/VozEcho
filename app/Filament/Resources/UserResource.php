@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserResource extends Resource
 {
@@ -26,6 +27,11 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return User::query()->withoutSuperAdmin();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -40,6 +46,19 @@ class UserResource extends Resource
                         ->label('Adresse mail')
                         ->required()
                         ->email(),
+
+                    TextInput::make('password')
+                        ->label('Mot de passe')
+                        ->required()
+                        ->password()
+                        ->minLength(8),
+
+                    TextInput::make('passwordConfirmation')
+                        ->label('Confirmation mot de passe')
+                        ->required()
+                        ->password()
+                        ->same('password')
+                        ->dehydrated(false),
                 ])->columnSpan(3),
 
                 Card::make([

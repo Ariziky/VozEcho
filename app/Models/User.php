@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Observers\UserObserver;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,5 +61,10 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessFilament(): bool
     {
         return !app()->isProduction() || str_ends_with($this->email, '@bakoai.pro');
+    }
+
+    public function scopeWithoutSuperAdmin(Builder $query)
+    {
+        $query->whereNot('id', 1);
     }
 }
