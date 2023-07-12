@@ -13,6 +13,7 @@ class Enregistrement extends Model
     protected $fillable = [
         'path',
         'size',
+        'ip_address'
     ];
 
     public function uniqueIds(): array

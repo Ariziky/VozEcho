@@ -80,6 +80,7 @@ class EnregistrementController extends Controller
 //            $record->path = 'storage/vozecho-audios/' . $storedFile;
             $record->path = 'storage/' . config('app.vozecho_audios_directory_name') . '/' . $storedFile;
             $record->size = $attachment->getSize();
+            $record->ip_address = $request->get('ip_address');
             $record->save();
 
             return new EnregistrementResource($record);

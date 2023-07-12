@@ -45,7 +45,7 @@ class UserResource extends Resource
                 Card::make([
                     Placeholder::make('created_at')
                         ->label('Date Création')
-                        ->content(fn(?User $record): string => $record?->created_at?->format('d/m/Y H:i:s')),
+                        ->content(fn(?User $record): ?string => $record?->created_at?->format('d/m/Y H:i:s')),
 
                     Placeholder::make('created_at')
                         ->label('Date Création')

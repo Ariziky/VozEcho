@@ -17,23 +17,23 @@ class StatsOverview extends BaseWidget
         return [
 //            Fieldset::make('test')
 //                ->schema([
-            Card::make('Nbre total d\'enregistrements', $this->getTodayRecords())
+            Card::make('Enregistrements du jour', $this->getTodayRecords())
 //                ->description('32k increase')
 //                ->descriptionIcon('heroicon-s-trending-up')
                 ->color('primary'),
 
-            Card::make('Nbre total de lectures', $this->getTodayListening())
+            Card::make('Lectures du jour', $this->getTodayListening())
 //                ->description('32k increase')
 //                ->descriptionIcon('heroicon-s-trending-up')
                 ->color('success'),
 //                ]),
 
-            Card::make('Nbre total d\'enregistrements', $this->getCurrentMonthRecords())
+            Card::make('Enregistrements du mois', $this->getCurrentMonthRecords())
 //                ->description('32k increase')
 //                ->descriptionIcon('heroicon-s-trending-up')
                 ->color('success'),
 
-            Card::make('Nbre total de lectures', $this->getCurrentMonthListenings())
+            Card::make('Lectures du mois', $this->getCurrentMonthListenings())
 //                ->description('32k increase')
 //                ->descriptionIcon('heroicon-s-trending-up')
                 ->color('success'),
