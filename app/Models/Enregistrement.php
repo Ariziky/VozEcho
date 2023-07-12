@@ -16,6 +16,10 @@ class Enregistrement extends Model
         'ip_address'
     ];
 
+    protected $with = [
+        'listenings'
+    ];
+
     public function uniqueIds(): array
     {
         return ['uuid'];
@@ -28,6 +32,6 @@ class Enregistrement extends Model
 
     public function listenings(): HasMany
     {
-        return $this->hasMany(Listening::class, 'enregistrement_id');
+        return $this->hasMany(Listening::class);
     }
 }

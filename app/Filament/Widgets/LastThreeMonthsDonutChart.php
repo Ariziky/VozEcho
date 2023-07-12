@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Enregistrement;
 use App\Models\Listening;
+use App\Models\Visit;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class LastThreeMonthsDonutChart extends ApexChartWidget
@@ -26,7 +27,9 @@ class LastThreeMonthsDonutChart extends ApexChartWidget
             ->whereMonth('created_at', '>', today()->subMonths(2))
             ->count();
 
-        $visitsData = 260;
+        $visitsData = Visit::query()
+            ->whereMonth('created_at', '>', today()->subMonths(2))
+            ->count();
 
         return [
             'chart' => [
