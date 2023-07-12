@@ -2,6 +2,7 @@
 
 use App\Http\Api\AuthController;
 use App\Http\Api\EnregistrementController;
+use App\Http\Api\ListeningController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,5 +37,8 @@ Route::middleware(['auth:sanctum', 'throttle:api'])
 
 Route::middleware(['auth:sanctum', 'throttle:api'])
     ->group(function () {
-        Route::apiResource('audio', EnregistrementController::class)->only(['store', 'show']);
+        Route::apiResource('audio', EnregistrementController::class)
+            ->only(['store', 'show']);
+
+        Route::post('listen', ListeningController::class);
     });

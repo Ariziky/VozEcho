@@ -9,9 +9,8 @@ class ListeningRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'uuid' => ['required'],
-            'enregistrement_id' => ['required', 'integer'],
-            'ip_address' => ['required'],
+            'uuid' => ['required', 'uuid'],
+            'ip_address' => ['required', 'ip'],
         ];
     }
 
