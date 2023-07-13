@@ -9,7 +9,7 @@ class VisitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ip_address' => ['required', 'ip'],
+            'ip_address' => ['nullable', 'ip'],
         ];
     }
 

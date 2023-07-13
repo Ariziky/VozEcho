@@ -10,7 +10,7 @@ class EnregistrementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ip_address' => ['required', 'ip'],
+            'ip_address' => ['nullable', 'ip'],
             'attachment' => [
                 'required',
                 'file',

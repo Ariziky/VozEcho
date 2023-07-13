@@ -10,7 +10,7 @@ class ListeningRequest extends FormRequest
     {
         return [
             'uuid' => ['required', 'uuid'],
-            'ip_address' => ['required', 'ip'],
+            'ip_address' => ['nullable', 'ip'],
         ];
     }
 
