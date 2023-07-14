@@ -21,7 +21,7 @@ class ListeningController extends Controller
 
         $data = [
             'enregistrement_id' => $record->id,
-            'ip_address' => $request->get('ip_address')
+            'ip_address' => $request->ip()
         ];
 
         Listening::create($data);

@@ -63,7 +63,7 @@ class User extends Authenticatable implements FilamentUser
         return !app()->isProduction() || str_ends_with($this->email, '@bakoai.pro');
     }
 
-    public function scopeWithoutSuperAdmin(Builder $query)
+    public function scopeWithoutSuperAdmin(Builder $query): void
     {
         $query->whereNot('id', 1);
     }
