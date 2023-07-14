@@ -36,7 +36,8 @@ Route::middleware(['auth:sanctum', 'throttle:api'])
 //        Route::get('/{audio:uuid}', 'show')->name('show');
 //    });
 
-Route::middleware(['auth:sanctum', 'throttle:api'])
+//Route::middleware(['auth:sanctum', 'throttle:api'])
+Route::middleware(['throttle:api'])
     ->group(function () {
         Route::apiResource('audio', EnregistrementController::class)
             ->only(['store', 'show']);
