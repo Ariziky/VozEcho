@@ -262,7 +262,7 @@ return [
     |
     */
 
-    'favicon' => 'images/favicon1.png',
+    'favicon' => 'images/favicon.png',
 
     /*
     |--------------------------------------------------------------------------

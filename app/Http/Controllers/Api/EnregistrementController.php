@@ -140,7 +140,7 @@ class EnregistrementController extends Controller
     public function show(Enregistrement $audio): JsonResponse|string
     {
         return response()->json(
-            data: ['url' => config('app.url') . '/' . $audio->path],
+            data: ['path' => $audio->path],
             status: Response::HTTP_OK
         );
     }
