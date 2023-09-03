@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
@@ -143,5 +144,24 @@ class EnregistrementController extends Controller
             data: ['path' => basename($audio->path)],
             status: Response::HTTP_OK
         );
+    }
+
+    public function destroy(Enregistrement $audio): JsonResponse|string
+    {
+        return DB::transaction(function () use ($audio) {
+            $audio->listenings()->delete();
+            $path = str($audio->path)->replace('storage/', '');
+
+            $fileExists = Storage::disk('public')->exists($path);
+            if ($fileExists) {
+                Storage::disk('public')->delete($path);
+            }
+
+            $audio->delete();
+
+            return response()->json(
+                status: Response::HTTP_NO_CONTENT
+            );
+        });
     }
 }

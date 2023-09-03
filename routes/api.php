@@ -40,7 +40,7 @@ Route::middleware(['auth:sanctum', 'throttle:api'])
 Route::middleware(['throttle:api'])
     ->group(function () {
         Route::apiResource('audio', EnregistrementController::class)
-            ->only(['store', 'show']);
+            ->only(['store', 'show', 'destroy']);
 
         // Enregistrement d'une lecture
         Route::post('listen', ListeningController::class);
